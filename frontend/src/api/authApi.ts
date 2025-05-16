@@ -1,28 +1,28 @@
-import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/auth';
+import axiosInstance from './axiosInstance';
+
 
 export const register = async (name: string, email: string, password: string) => {
-  const response = await axios.post(`${API_URL}/register`, { name, email, password });
+  const response = await axiosInstance.post(`/auth/register`, { name, email, password });
   return response.data;
 };
 
 export const login = async (email: string, password: string) => {
-  const response = await axios.post(`${API_URL}/login`, { email, password }, { withCredentials: true });
+  const response = await axiosInstance.post(`/auth/login`, { email, password });
   return response.data;
 };
 
 export const logout = async () => {
-  const response = await axios.post(`${API_URL}/logout`, {}, { withCredentials: true });
+  const response = await axiosInstance.post(`/auth/logout`, {});
   return response.data;
 };
 
 export const refreshToken = async () => {
-  const response = await axios.post(`${API_URL}/refresh-token`, {}, { withCredentials: true });
+  const response = await axiosInstance.post(`/auth/refresh-token`, {});
   return response.data;
 };
 
 export const getCurrentUser = async () => {
-  const response = await axios.get(`${API_URL}/me`, { withCredentials: true });
+  const response = await axiosInstance.get(`/auth/me`);
   return response.data;
 };

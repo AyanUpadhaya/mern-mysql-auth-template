@@ -1,53 +1,116 @@
 ## Full-Stack MERN MySQL JWT Authentication Template
 
+### Installation guide
+
+```bash
+npm install
+npm start
+```
+
+Note: packages inside the directories or folder needs to be installed seperately
+
+```bash
+cd frontend
+npm install
+
+cd backend
+npm install
+```
+
+**\* if you don't have concurrently installed **
+
+Install concurrently as a dev dependency in the root directory with package.json
+
+```bash
+npm init -y
+npm install --save-dev concurrently
+```
+
+2. Modify the root package.json to include a combined start script
+
+```json
+{
+  "name": "your-project-root",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && node server.js"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
+```
+
+3. Run the combined command
+
+```bash
+npm start
+```
+
 ### Features Implemented
+
 - #### Backend:
 
-    Express.js server with MySQL database
+  - Express.js server with MySQL database
 
-    Token-based authentication (JWT)
+  - Token-based authentication (JWT)
 
-    Access token and refresh token implementation
+  - Access token and refresh token implementation
 
-    Cookie-based authentication
+  - Cookie-based authentication
 
-    Protected routes with middleware
+  - Protected routes with middleware
 
-    Error handling
+  - Error handling
 
 - #### Frontend:
 
-    - React with TypeScript
+  - React with TypeScript
 
-    - React Query for data fetching and state management
+  - React Query for data fetching and state management
 
-    - Axios with interceptors for automatic token refresh
+  - Axios with interceptors for automatic token refresh
 
-    - Protected routes
+  - Protected routes
 
-    - Login/Register forms
+  - Login/Register forms
 
-    - Dashboard with product listing
+  - Dashboard with product listing
 
-    - Automatic logout when tokens expire
+  - Automatic logout when tokens expire
 
-    ### Authentication Flow:
+  ### Authentication Flow:
 
-    1. User registers with email/password
+  1. User registers with email/password
 
-    2. User logs in and receives access/refresh tokens
+  2. User logs in and receives access/refresh tokens
 
-    3. Access token expires after 15 minutes
+  3. Access token expires after 15 minutes
 
-    3. When access token expires, frontend automatically requests new one using refresh token
+  4. When access token expires, frontend automatically requests new one using refresh token
 
-    4. Refresh token expires after 7 days
+  5. Refresh token expires after 7 days
 
-    5. User can logout which invalidates the refresh token
+  6. User can logout which invalidates the refresh token
+
+### Env Sample
+
+```.env
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=mern_auth_template
+ACCESS_TOKEN_SECRET=
+REFRESH_TOKEN_SECRET=
+FRONTEND_URL=http://localhost:5173
+PORT=5000
+```
 
 ### Database Modeling
 
-``` sql
+```sql
 CREATE DATABASE mern_auth_template;
 
 USE mern_auth_template;

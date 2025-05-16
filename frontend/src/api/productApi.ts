@@ -1,7 +1,8 @@
-import axios from "axios";
-const API_URL = "http://localhost:5000/api/products";
+
+import axiosInstance from "./axiosInstance";
+
 
 export const getProducts = async () => {
-  const response = await axios.get(API_URL, { withCredentials: true });
+  const response = await axiosInstance.get("/products");
   return response.data;
 };

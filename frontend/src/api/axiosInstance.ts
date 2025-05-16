@@ -3,15 +3,12 @@ import { refreshToken } from "./authApi";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:5000/api",
-  withCredentials: true,
+  withCredentials: true, // This is important for cookies to be sent
 });
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    // We don't need to manually set the token since it's in cookies
     return config;
   },
   (error) => {
@@ -24,13 +21,15 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
-        const { accessToken } = await refreshToken();
-        localStorage.setItem("accessToken", accessToken);
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+        // Attempt to refresh the token
+        await refreshToken();
+
+        // The new access token will be set in cookies by the server
+        // We just need to retry the original request
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         // Redirect to login if refresh fails
