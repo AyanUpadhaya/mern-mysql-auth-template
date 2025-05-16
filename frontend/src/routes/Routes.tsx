@@ -3,6 +3,8 @@ import AuthRoute from "../components/AuthRoute";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
+import NewProduct from "../pages/NewProduct";
+import ProductDetail from "../pages/ProductDetail";
 
 const router = createBrowserRouter([
   {
@@ -12,6 +14,14 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/products",
+    element: (
+      <AuthRoute>
+        <Dashboard />
+      </AuthRoute>
+    ),
   },
   {
     path: "/dashboard",
@@ -26,6 +36,22 @@ const router = createBrowserRouter([
     element: (
       <AuthRoute>
         <Dashboard />
+      </AuthRoute>
+    ),
+  },
+  {
+    path: "/products/new",
+    element: (
+      <AuthRoute>
+        <NewProduct />
+      </AuthRoute>
+    ),
+  },
+  {
+    path: "/products/:id",
+    element: (
+      <AuthRoute>
+        <ProductDetail />
       </AuthRoute>
     ),
   },

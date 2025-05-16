@@ -1,6 +1,8 @@
 import { useProducts } from "../hooks/useProducts";
 import { useUser } from "../hooks/useAuth";
 import { useLogout } from "../hooks/useAuth";
+import { Link } from "react-router-dom";
+import type { Product } from "../types";
 
 const Dashboard = () => {
   const { data: products, isLoading, error } = useProducts();
@@ -14,9 +16,17 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-100">
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Product Dashboard
+          </h1>
           <div className="flex items-center space-x-4">
-            <span className="text-gray-700">Welcome, {user?.user?.email}</span>
+            <Link
+              to="/products/new"
+              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+            >
+              Add Product
+            </Link>
+            <span className="text-gray-700">Welcome, {user?.name}</span>
             <button
               onClick={() => logout()}
               className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
@@ -50,22 +60,33 @@ const Dashboard = () => {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Stock
                     </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {products?.map((product) => (
+                  {products?.map((product: Product) => (
                     <tr key={product.id}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {product.name}
+                        {product?.name}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {product.description}
+                        {product?.description}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        ${product.price}
+                        ${product?.price}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {product.stock}
+                        {product?.stock}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <Link
+                          to={`/products/${product?.id}`}
+                          className="text-indigo-600 hover:text-indigo-900"
+                        >
+                          Edit
+                        </Link>
                       </td>
                     </tr>
                   ))}
